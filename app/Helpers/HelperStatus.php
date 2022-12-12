@@ -2,7 +2,7 @@
 
 function labelStatus($nilai)
 {
-    return '<label class="badge badge-info">'.$nilai.'</label>';
+    return '<span class="bg-green-600 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">'.$nilai.'</span>';
 }
 
 function labelCopy($nilai)

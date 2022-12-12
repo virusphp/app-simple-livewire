@@ -80,15 +80,17 @@
                                         {{ rupiah($val->saldo->saldo) }}
                                     </td>
                                     <td class="py-4 px-6">
-                                        {{ $val->is_active }}
+                                        {!! labelStatus($val->is_active) !!}
                                     </td>
-                                    <td class="py-4 px-6 text-right">
-                                        <a href="#"
-                                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                        <x-jet-danger-button class="ml-3"
-                                            wire:click="confirmDelete('{{ $val->kode_agen }}')"
+                                    <td class="py-4 px-6 text-right flex items-center">
+                                        <x-jet-button wire:click="confirmEdit(' {{ $val->id }})"
+                                            class="bg-orange-500 hover:bg-orange-700">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                                        </x-jet-button>
+                                        <x-jet-danger-button class="ml-1"
+                                            wire:click="confirmDelete('{{ $val->id }}')"
                                             wire:loading.attr="disabled">
-                                            {{ __('Delete') }}
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                                         </x-jet-danger-button>
                                     </td>
                                 </tr>
@@ -108,8 +110,6 @@
 
                         <x-slot name="content">
                             {{ __('Are you sure you want to delete your Agen?') }}
-
-
                         </x-slot>
 
                         <x-slot name="footer">
@@ -118,7 +118,7 @@
                                 {{ __('Cancel') }}
                             </x-jet-secondary-button>
 
-                            <x-jet-danger-button class="ml-3" wire:click="deleteDepo( {{$confirmationDelete}} )"
+                            <x-jet-danger-button class="ml-3" wire:click="deleteAgen( {{$confirmationDelete}} )"
                                 wire:loading.attr="disabled">
                                 {{ __('Delete') }}
                             </x-jet-danger-button>
@@ -126,55 +126,53 @@
                     </x-jet-dialog-modal>
 
                     {{-- Model Confirmasi Add --}}
-                    {{-- <x-jet-dialog-modal wire:model="confirmationAdd">
+                    <x-jet-dialog-modal wire:model="confirmationAdd">
                         <x-slot name="title">
-                            {{ __('Add Depo') }}
+                            {{ __('Add Agen') }}
                         </x-slot>
 
                         <x-slot name="content">
-                            <div class="col-span-6 sm:col-span-4">
-                                <x-jet-label for="kdbagian" value="{{ __('Kode Bagian') }}" />
-                                <x-jet-input id="kdbagian" type="text" class="mt-1 block w-full"
-                                    wire:model.defer="bagianfarmasi.kdbarang" />
-                                <x-jet-input-error for="bagianfarmasi.kdbarang" class="mt-2" />
+                            <p>MAROKO</p>
+                            {{-- <div class="col-span-6 sm:col-span-4">
+                                <x-jet-label for="nama" value="{{ __('Nama Agen') }}" />
+                                <x-jet-input id="nama" type="text" class="mt-1 block w-full"
+                                    wire:model.defer="user.nama" />
+                                <x-jet-input-error for="user.nama" class="mt-2" />
+                            </div> --}}
+                            {{-- <div class="col-span-6 sm:col-span-4 mt-2">
+                                <x-jet-label for="username" value="{{ __('Username') }}" />
+                                <x-jet-input id="username" type="text" class="mt-1 block w-full"
+                                    wire:model.defer="user.username" />
+                                <x-jet-input-error for="user.username" class="mt-2" />
                             </div>
                             <div class="col-span-6 sm:col-span-4 mt-2">
-                                <x-jet-label for="nmbagian" value="{{ __('Nama Bagian') }}" />
-                                <x-jet-input id="nmbagian" type="text" class="mt-1 block w-full"
-                                    wire:model.defer="bagianfarmasi.nmbagian" />
-                                <x-jet-input-error for="bagianfarmasi.nmbagian" class="mt-2" />
+                                <x-jet-label for="email" value="{{ __('Email') }}" />
+                                <x-jet-input id="email" type="text" class="mt-1 block w-full"
+                                    wire:model.defer="user.email" />
+                                <x-jet-input-error for="user.email" class="mt-2" />
                             </div>
                             <div class="col-span-6 sm:col-span-4 mt-2">
-                                <x-jet-label for="kd-sub-unit" value="{{ __('Subunit') }}" />
-                                <select wire:model.defer="bagianfarmasi.kd_sub_unit" id="kd-sub-unit"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option value="">Select Subunit</option>
-                                    <option value="1">Rawat jlah </option>
-                                    <option value="0">ANFRAH</option>
-                                </select>
-                            </div>
-                            <div class="col-span-6 sm:col-span-4 mt-2">
-                                <x-jet-label for="status_apotik" value="{{ __('Status Apotik') }}" />
-                                <label for="status_apotik" class="flex items-center">
-                                    <x-jet-checkbox id="status_apotik" wire:model.defer="bagianfarmasi.status_apotik" />
+                                <x-jet-label for="user" value="{{ __('Status') }}" />
+                                <label for="user" class="flex items-center">
+                                    <x-jet-checkbox id="user" wire:model.defer="user.is_active" />
                                     <span class="ml-2 text-sm text-gray-600">{{ __('Depo') }}</span>
                                 </label>
-                                <x-jet-input-error for="bagianfarmasi.status_apotik" class="mt-2" />
-                            </div>
+                                <x-jet-input-error for="user.is_active" class="mt-2" />
+                            </div> --}}
 
                         </x-slot>
-
+                        
                         <x-slot name="footer">
-                            <x-jet-secondary-button wire:click="$set('confirmationAdd', false)"
+                            {{-- <x-jet-secondary-button wire:click="$set('confirmationAdd', false)"
                                 wire:loading.attr="disabled">
                                 {{ __('Cancel') }}
-                            </x-jet-secondary-button>
+                            </x-jet-secondary-button> --}}
 
-                            <x-jet-danger-button class="ml-3" wire:click="saveDepo()" wire:loading.attr="disabled">
+                            {{-- <x-jet-danger-button class="ml-3" wire:click="savDepo()" wire:loading.attr="disabled">
                                 {{ __('Save') }}
-                            </x-jet-danger-button>
+                            </x-jet-danger-button> --}}
                         </x-slot>
-                    </x-jet-dialog-modal> --}}
+                    </x-jet-dialog-modal>
                 </div>
             </div>
         </div>

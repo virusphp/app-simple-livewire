@@ -11,6 +11,8 @@ class AgenIndex extends Component
 {
     use WithPagination;
 
+    public $user;
+
     protected $paginationTheme = 'tailwind';
     public $limit = 10;
     public $search;
@@ -22,6 +24,7 @@ class AgenIndex extends Component
     ];
 
     public $confirmationDelete;
+    public $confirmationAdd = false;
 
     public function updatingSearch()
     {
@@ -33,9 +36,28 @@ class AgenIndex extends Component
         $this->resetPage();
     }
 
+    public function confirmAdd()
+    {
+    //     // $this->reset(['user']);
+        $this->confirmationAdd = true;
+    }
+
+    // public function confirmEdit(User $user)
+    // {
+    //     $this->user = $user;
+    //     $this->confirmationAdd = true;
+    // }
+
     public function confirmDelete(string $kode_agen)
     {
         $this->confirmationDelete = $kode_agen;
+    }
+
+    public function deleteAgen(User $user)
+    {
+        dd($user->transaksi());
+        $this->confirmationDelete = false;
+        session()->flash('message','Agen berhasil di hapus!');
     }
 
     public function render()
