@@ -51,7 +51,7 @@
                                     <th scope="col" class="py-3 px-6">
                                         Saldo 
                                     </th>
-                                    <th scope="col" class="py-3 px-6">
+                                    <th scope="col" class="py-4 px-6">
                                         Status 
                                     </th>
                                     <th scope="col" class="py-3 px-6 text-right">
@@ -80,7 +80,7 @@
                                         {{ rupiah($val->saldo->saldo) }}
                                     </td>
                                     <td class="py-4 px-6">
-                                        {!! labelStatus($val->is_active) !!}
+                                       {!! labelStatus($val->is_active) !!}
                                     </td>
                                     <td class="py-4 px-6 text-right flex items-center">
                                         <x-jet-button wire:click="confirmEdit(' {{ $val->id }})"
