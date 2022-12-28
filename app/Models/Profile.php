@@ -31,6 +31,26 @@ class Profile extends Model
         return $this->hasOne(User::class, "kode_agen", "kode_agen");
     }
 
+     public function provinsi()
+    {
+        return $this->hasOne(Province::class, 'id');
+    }
+
+    public function fee()
+    {
+        return $this->hasMany(FeeAgen::class);
+    }
+
+    public function kota()
+    {
+        return $this->belongsTo(Regency::class, 'regency_id');
+    }
+
+    public function scopeListAgen($query)
+    {
+        return $query->with('user')->role('agen');
+    }
+
     public function scopePencarian($query, $search)
     {
         return $query->when($search, function($q, $search) {
@@ -47,5 +67,14 @@ class Profile extends Model
         });
     }
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function($profile) {
+            $profile->fee()->delete();
+            $profile->user->delete();
+        });
+    }
 
 }

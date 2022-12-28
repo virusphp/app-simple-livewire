@@ -1,6 +1,6 @@
 <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{ __('Agen RadjaExpress') }}
+        {{ __('Master Negara') }}
     </h2>
 </x-slot>
 
@@ -10,11 +10,11 @@
             <div class="p-2 sm:px-10 bg-white border-b border-gray-200 ">
                 <div class="mt-2 text-2xl font-bold uppercase flex justify-between">
                     <div>
-                        Agen RadjaExpress
+                        Master Negara
                     </div>
                     <div class="mr-2">
                         <x-jet-button wire:click="confirmAdd" class="bg-blue-500 hover:bg-blue-700">
-                            Add Agen
+                            Tambah Negara
                         </x-jet-button>
                     </div>
                 </div>
@@ -22,13 +22,10 @@
                 {{-- {{ $query }} --}}
 
                 <div class="mt-2 text-gray-500">
-                    <div class="flex justify-between py-2">
-                        <div>
+                    <div class="flex justify-end py-2">
+                        <div class="mr-2">
                             <input type="search" wire:model="search" placeholder="Search..."
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-600 leading-tight focus:outline-none focus:shadow-outline">
-                        </div>
-                        <div class="mr-2">
-                            <input type="checkbox" class="mr-2 leading-tight" wire:model="isActive">Active Only
                         </div>
                     </div>
                     <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
@@ -37,58 +34,40 @@
                                 class="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
                                     <th scope="col" class="py-3 px-6 font-bold">
-                                        Kode Agen
+                                        NO
                                     </th>
                                     <th scope="col" class="py-3 px-6">
-                                        Nama Agen
+                                        KODE NEGARA
                                     </th>
                                     <th scope="col" class="py-3 px-6">
-                                        Alamat Agen
+                                        NAMA NEGARA
                                     </th>
                                     <th scope="col" class="py-3 px-6">
-                                        No telp 
-                                    </th>
-                                    <th scope="col" class="py-3 px-6">
-                                        Saldo 
-                                    </th>
-                                    <th scope="col" class="py-3 px-6">
-                                        Status 
-                                    </th>
-                                    <th scope="col" class="py-3 px-6 text-right">
-                                        Aksi
+                                        AKSI 
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($dataAgen as $val)
+                                @foreach($dataCountry as $val)
                                 <tr
                                     class="bg-white border-bx hover:bg-gray-50">
                                     <th scope="row"
                                         class="py-2 px-3 font-medium text-gray-900 whitespace-nowrap">
-                                        {{ $val->kode_agen }}
+                                        {{ $loop->iteration }}
                                     </th>
                                     <td class="py-2 px-3">
-                                        {{ $val->nama }}
+                                        {{ $val->kode_negara }}
                                     </td>
                                     <td class="py-2 px-3">
-                                        {{ $val->profile->alamat_agen }}
-                                    </td>
-                                    <td class="py-2 px-3">
-                                        {{ $val->profile->no_telpon }}
-                                    </td>
-                                    <td class="py-2 px-3">
-                                        {{ rupiah($val->saldo->saldo ?? 0) }}
-                                    </td>
-                                    <td class="py-2 px-3">
-                                       {!! labelStatus($val->is_active) !!}
+                                        {{ $val->nama_negara }}
                                     </td>
                                     <td class="py-2 px-3 text-right flex items-center">
-                                        <x-jet-button wire:click="confirmEdit(' {{ $val->id }})"
+                                        <x-jet-button wire:click="confirmEdit('{{ $val->kode_negara }}')"
                                             class="bg-orange-500 hover:bg-orange-700">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                                         </x-jet-button>
                                         <x-jet-danger-button class="ml-1"
-                                            wire:click="confirmDelete('{{ $val->id }}')"
+                                            wire:click="confirmDelete('{{ $val->kode_negara }}')"
                                             wire:loading.attr="disabled">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                                         </x-jet-danger-button>
@@ -99,7 +78,7 @@
                         </table>
                     </div>
                     <div class="py-3">
-                        {{ $dataAgen->appends(['search' => 'search'])->render() }}
+                        {{ $dataCountry->appends(['search' => 'search'])->render() }}
                     </div>
 
                     {{-- Model Confirmasi Delete --}}
@@ -128,49 +107,34 @@
                     {{-- Model Confirmasi Add --}}
                     <x-jet-dialog-modal wire:model="confirmationAdd">
                         <x-slot name="title">
-                            {{ __('Add Agen') }}
+                            {{ __('Tambah Negara') }}
                         </x-slot>
 
                         <x-slot name="content">
-                            <p>MAROKO</p>
-                            {{-- <div class="col-span-6 sm:col-span-4">
-                                <x-jet-label for="nama" value="{{ __('Nama Agen') }}" />
-                                <x-jet-input id="nama" type="text" class="mt-1 block w-full"
-                                    wire:model.defer="user.nama" />
-                                <x-jet-input-error for="user.nama" class="mt-2" />
-                            </div> --}}
-                            {{-- <div class="col-span-6 sm:col-span-4 mt-2">
-                                <x-jet-label for="username" value="{{ __('Username') }}" />
-                                <x-jet-input id="username" type="text" class="mt-1 block w-full"
-                                    wire:model.defer="user.username" />
-                                <x-jet-input-error for="user.username" class="mt-2" />
+                            <div class="col-span-6 sm:col-span-4 mt-2">
+                                <x-jet-label for="kode_negara" value="{{ __('Kode Negara') }}" />
+                                <x-jet-input id="kode-negara" type="text" class="mt-1 block w-full"
+                                    wire:model.defer="negara.kode_negara"/>
+                                <x-jet-input-error for="negara.kode_negara" class="mt-2" />
                             </div>
                             <div class="col-span-6 sm:col-span-4 mt-2">
-                                <x-jet-label for="email" value="{{ __('Email') }}" />
-                                <x-jet-input id="email" type="text" class="mt-1 block w-full"
-                                    wire:model.defer="user.email" />
-                                <x-jet-input-error for="user.email" class="mt-2" />
+                                <x-jet-label for="nama_negara" value="{{ __('Nama Negara') }}" />
+                                <x-jet-input id="nama-negara" type="text" class="mt-1 block w-full"
+                                    wire:model.defer="negara.nama_negara" />
+                                <x-jet-input-error for="negara.nama_negara" class="mt-2" />
                             </div>
-                            <div class="col-span-6 sm:col-span-4 mt-2">
-                                <x-jet-label for="user" value="{{ __('Status') }}" />
-                                <label for="user" class="flex items-center">
-                                    <x-jet-checkbox id="user" wire:model.defer="user.is_active" />
-                                    <span class="ml-2 text-sm text-gray-600">{{ __('Depo') }}</span>
-                                </label>
-                                <x-jet-input-error for="user.is_active" class="mt-2" />
-                            </div> --}}
 
                         </x-slot>
                         
                         <x-slot name="footer">
-                            {{-- <x-jet-secondary-button wire:click="$set('confirmationAdd', false)"
+                            <x-jet-secondary-button wire:click="$set('confirmationAdd', false)"
                                 wire:loading.attr="disabled">
                                 {{ __('Cancel') }}
-                            </x-jet-secondary-button> --}}
+                            </x-jet-secondary-button>
 
-                            {{-- <x-jet-danger-button class="ml-3" wire:click="savDepo()" wire:loading.attr="disabled">
+                            <x-jet-danger-button class="ml-3" wire:click="saveNegara()" wire:loading.attr="disabled">
                                 {{ __('Save') }}
-                            </x-jet-danger-button> --}}
+                            </x-jet-danger-button>
                         </x-slot>
                     </x-jet-dialog-modal>
                 </div>

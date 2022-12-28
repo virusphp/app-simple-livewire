@@ -92,4 +92,14 @@ class User extends Authenticatable
             $query->where('nama', 'like', "%{$search}%");
         });
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function($user) {
+            $user->profile->delete();
+        });
+    }
+
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\Master\Country\CountriesIndex;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,14 +28,13 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    Route::group(['namespace' => 'Dashboard'], function() {
-        Route::group(['namespace' => 'Pasien'], function() {
-            Route::get('/pasien', Biodata::class)->name('pasien');
-        });
-    });
 
     Route::group(['namespace' => 'Agen'], function() {
         Route::get('agen', AgenIndex::class)->name('agen');
+    });
+
+    Route::group(['namespace' => 'Master'], function() {
+        Route::get('countries', CountriesIndex::class)->name('countries');
     });
 
 });

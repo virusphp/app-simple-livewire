@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Agen;
 
-use App\Models\Profile;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -55,9 +54,16 @@ class AgenIndex extends Component
 
     public function deleteAgen(User $user)
     {
-        dd($user->transaksi());
-        $this->confirmationDelete = false;
-        session()->flash('message','Agen berhasil di hapus!');
+        // dd($user->transaksi, $user->topup, $user->saldo, $user->profile);
+        if (!$user->transaksi && !$user->topup) {
+            if ($user->saldo) {
+                $user->saldo->delete();
+            }
+            $user->delete();
+            $this->confirmationDelete = false;
+            session()->flash('message','Agen berhasil di hapus!');
+        }
+        session()->flash('message','Agen gagal di hapus!');
     }
 
     public function render()
