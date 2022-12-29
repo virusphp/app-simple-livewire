@@ -12,6 +12,7 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <link href="{{ asset('plugins/toastr/toastr.min.css') }}" rel="stylesheet">
 
         <!-- Styles -->
         @livewireStyles
@@ -37,8 +38,19 @@
             </main>
         </div>
 
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
         @stack('modals')
 
         @livewireScripts
+        <script>
+            window.addEventListener('alert', event => {
+                toastr[event.detail.type](event.detail.message,
+                event.detail.title ?? ''), toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                }
+            });
+        </script>
     </body>
 </html>

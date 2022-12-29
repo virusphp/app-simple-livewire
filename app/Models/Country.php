@@ -28,4 +28,19 @@ class Country extends Model
         });
     }
 
+    public function fees()
+    {
+        return $this->hasMany(FeeAgen::class, 'kode_negara', 'kode_negara');
+    }
+
+    public function tarif()
+    {
+        return $this->hasMany(Tarif::class, 'kode_negara','kode_negara');
+    }
+
+    public function setNamaNegaraAtrribute($value)
+    {
+        if(!empty($value)) $this->attribute['nama_negara'] = strtoupper($value);
+    }
+
 }

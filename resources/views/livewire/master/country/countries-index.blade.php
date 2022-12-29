@@ -97,7 +97,7 @@
                                 {{ __('Cancel') }}
                             </x-jet-secondary-button>
 
-                            <x-jet-danger-button class="ml-3" wire:click="deleteAgen( {{$confirmationDelete}} )"
+                            <x-jet-danger-button class="ml-3" wire:click="deleteNegara('{{$confirmationDelete}}')"
                                 wire:loading.attr="disabled">
                                 {{ __('Delete') }}
                             </x-jet-danger-button>
@@ -111,7 +111,7 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <div class="col-span-6 sm:col-span-4 mt-2">
+                            <div class="col-span-6 sm:col-span-4 mt-2 {{ isset($this->negara->kode_negara) ? 'hidden' : ''}}">
                                 <x-jet-label for="kode_negara" value="{{ __('Kode Negara') }}" />
                                 <x-jet-input id="kode-negara" type="text" class="mt-1 block w-full"
                                     wire:model.defer="negara.kode_negara"/>

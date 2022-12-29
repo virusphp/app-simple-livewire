@@ -21,7 +21,7 @@ class CountriesIndex extends Component
 
     protected $rules = [
         'negara.kode_negara' => 'required',
-        'negara.nama_negara' => 'requried'
+        'negara.nama_negara' => 'required'
     ];
 
     public function confirmAdd()
@@ -40,18 +40,35 @@ class CountriesIndex extends Component
     {
         $this->confirmationDelete = $kode_negara;
     }
-
     
     public function saveNegara()
     {
-        dd($this->negara);
-        $this->validation();
+        $this->validate();
+        if(isset($this->negara->kode_negara)) {
+            $this->negara->save();
+            $this->dispatchBrowserEvent('alert', ['type' => 'success', 'message' => 'Master negara berhasil di update!']);
+        } else {
+            Country::create($this->negara);
+            $this->dispatchBrowserEvent('alert', ['type' => 'success', 'message' => 'Master negara berhasil di tambah!']);
+        }
+        $this->confirmationAdd = false;
 
+    }
+
+    public function deleteNegara(Country $negara)
+    {
+        if ($negara->tarif()->count() != 0) {
+            $this->dispatchBrowserEvent('alert', ['type' => 'info', 'message' => 'Master negara tidak bisa di hapus!']);
+            return false;
+        }
+        $negara->delete();
+        $this->confirmationDelete = false;
+        $this->dispatchBrowserEvent('alert', ['type' => 'success', 'message' => 'Master negara berhasil di hapus!']);
     }
 
     public function render()
     {
-        $dataCountry = Country::pencarian($this->search)->paginate($this->limit);
+        $dataCountry = Country::pencarian($this->search)->latest()->paginate($this->limit);
         return view('livewire.master.country.countries-index', compact('dataCountry'));
     }
 }
