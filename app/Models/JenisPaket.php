@@ -20,6 +20,18 @@ class JenisPaket extends Model
 
     protected $keyType = "string";
 
+    public function scopePencarian($query, $search)
+    {
+        return $query->when($search, function($q, $search) {
+            $q->where('nama_jenis_paket', 'like', "%{$search}%");
+        });
+    }
+
+    public function tarif()
+    {
+        return $this->hasMany(Tarif::class, 'kode_jenis','kode_jenis');
+    }
+
     public function getAutoNumberOptions()
     {
         return [

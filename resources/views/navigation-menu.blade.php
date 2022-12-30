@@ -21,6 +21,9 @@
                     <x-jet-nav-link href="{{ route('countries') }}" :active="request()->routeIs('countries')">
                         {{ __('Country') }}
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('jenispaket') }}" :active="request()->routeIs('jenispaket')">
+                        {{ __('Jenis Paket') }}
+                    </x-jet-nav-link>
                 </div>
             </div>
 

@@ -186,6 +186,7 @@ return [
          * Package Service Providers...
          */
         Spatie\Permission\PermissionServiceProvider::class,
+        Virusphp\AutoNumber\AutoNumberServiceProvider::class,
         /*
          * Application Service Providers...
          */

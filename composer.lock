@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "40c1253e02b1a8df27b4fe85b00d57d4",
+    "content-hash": "fa348c07e5803d474678a1997f08cbf6",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -5858,6 +5858,61 @@
                 "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/2.2.5"
             },
             "time": "2022-09-12T13:28:28+00:00"
+        },
+        {
+            "name": "virusphp/autonumbering",
+            "version": "v1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/virusphp/laravel-autonumbering.git",
+                "reference": "dd61b68297495b60c4ebc3f023edbf5739792f01"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/virusphp/laravel-autonumbering/zipball/dd61b68297495b60c4ebc3f023edbf5739792f01",
+                "reference": "dd61b68297495b60c4ebc3f023edbf5739792f01",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/config": "^5.1|^6.0|^7.0|^8.0|^9.0",
+                "illuminate/database": "^5.1|^6.0|^7.0|^8.0|^9.0",
+                "illuminate/support": "^5.1|^6.0|^7.0|^8.0|^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Virusphp\\AutoNumber\\AutoNumberServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Virusphp\\AutoNumber\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Slamet Sugandi",
+                    "email": "packercyber@gmail.com"
+                }
+            ],
+            "description": "Laravel package to create autonumber for Eloquent model",
+            "homepage": "https://github.com/virusphp/autonumbering",
+            "keywords": [
+                "autonumber",
+                "eloquent",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/virusphp/laravel-autonumbering/issues",
+                "source": "https://github.com/virusphp/laravel-autonumbering/tree/v1.4"
+            },
+            "time": "2022-08-28T17:09:54+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
