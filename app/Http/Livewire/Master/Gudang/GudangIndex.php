@@ -55,7 +55,7 @@ class GudangIndex extends Component
 
     }
 
-    public function deletegudangPaket(gudangPaket $gudang)
+    public function deleteGudang(gudangPaket $gudang)
     {
         // if ($gudang->tarif()->count() != 0) {
         //     $this->dispatchBrowserEvent('alert', ['type' => 'info', 'message' => 'Master gudang tidak bisa di hapus!']);

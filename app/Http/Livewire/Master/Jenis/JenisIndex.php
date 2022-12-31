@@ -20,7 +20,7 @@ class JenisIndex extends Component
     public $confirmationAdd = false;
 
     protected $rules = [
-        'jenis.kode_jenis' => 'required',
+        'jenis.kode_jenis' => 'nullable|string',
         'jenis.nama_jenis_paket' => 'required'
     ];
 
@@ -48,7 +48,7 @@ class JenisIndex extends Component
             $this->jenis->save();
             $this->dispatchBrowserEvent('alert', ['type' => 'success', 'message' => 'Master jenis berhasil di update!']);
         } else {
-            Country::create($this->jenis);
+            JenisPaket::create($this->jenis);
             $this->dispatchBrowserEvent('alert', ['type' => 'success', 'message' => 'Master jenis berhasil di tambah!']);
         }
         $this->confirmationAdd = false;
