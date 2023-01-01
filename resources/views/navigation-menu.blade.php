@@ -24,6 +24,10 @@
                     <x-jet-nav-link href="{{ route('jenispaket') }}" :active="request()->routeIs('jenispaket')">
                         {{ __('Jenis Paket') }}
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('gudang') }}" :active="request()->routeIs('gudang')">
+                        {{ __('Gudang Hub') }}
+                    </x-jet-nav-link>
+       
                 </div>
             </div>
 

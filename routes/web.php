@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Livewire\Master\Country\CountriesIndex;
+use App\Http\Livewire\Master\Gudang\GudangIndex;
 use App\Http\Livewire\Master\Jenis\JenisIndex;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,7 @@ Route::middleware([
     Route::group(['namespace' => 'Master'], function() {
         Route::get('countries', CountriesIndex::class)->name('countries');
         Route::get('jenispaket', JenisIndex::class)->name('jenispaket');
+        Route::get('gudang', GudangIndex::class)->name('gudang');
     });
 
 });

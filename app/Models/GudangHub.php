@@ -20,6 +20,13 @@ class GudangHub extends Model
 
     protected $keyType = "string";
 
+    public function scopePencarian($query, $search)
+    {
+        return $query->when($search, function($q, $search) {
+            $q->where('nama_gudang', 'like', "%{$search}%");
+        });
+    }
+
     public function getAutoNumberOptions()
     {
         return [
