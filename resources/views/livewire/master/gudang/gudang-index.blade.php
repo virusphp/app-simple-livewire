@@ -125,6 +125,19 @@
                                 <x-jet-input-error for="gudang.kode_gudang" class="mt-2" />
                             </div>
                             <div class="col-span-6 sm:col-span-4 mt-2">
+                                <x-jet-label for="regency_id" value="{{ __('Kota / Kabupaten') }}" />
+                                <select wire:model.defer="gudang.regency_id" id="kd-sub-unit"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option value="">Select Kota / Kab</option>
+                                    @foreach($regecies as $val)
+                                    <option value="{{ $val->id }}" wire:key="{{ $val->name }}">{{
+                                        $val->name }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                                <x-jet-input-error for="gudang.regency_id" class="mt-2" />
+                            </div>
+                            <div class="col-span-6 sm:col-span-4 mt-2">
                                 <x-jet-label for="nama_gudan" value="{{ __('Nama Gudang Hub') }}" />
                                 <x-jet-input id="nama-kode-gudang" type="text" class="mt-1 block w-full"
                                     wire:model.defer="gudang.nama_gudang" />

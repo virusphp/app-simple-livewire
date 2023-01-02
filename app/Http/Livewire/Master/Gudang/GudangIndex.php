@@ -41,7 +41,7 @@ class GudangIndex extends Component
         $this->confirmationDelete = $kode_gudang;
     }
 
-    public function saveGudang()
+    public function saveGudangHub()
     {
         $this->validate();
         if(isset($this->gudang->kode_gudang)) {
