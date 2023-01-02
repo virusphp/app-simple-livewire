@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Master\Gudang;
 
 use App\Models\GudangHub;
+use App\Models\Regency;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -68,7 +69,8 @@ class GudangIndex extends Component
 
     public function render()
     {
+        $regencies = Regency::select('id','name')->get();
         $dataGudang = GudangHub::pencarian($this->search)->latest()->paginate($this->limit);
-        return view('livewire.master.gudang.gudang-index', compact('dataGudang'));
+        return view('livewire.master.gudang.gudang-index', compact('dataGudang','regencies'));
     }
 }
