@@ -20,7 +20,6 @@ class GudangIndex extends Component
     public $confirmationAdd = false;
 
     protected $rules = [
-        'gudang.kode_gudang' => 'required',
         'gudang.nama_gudang' => 'required',
         'gudang.regency_id' => 'required'
     ];
@@ -49,14 +48,14 @@ class GudangIndex extends Component
             $this->gudang->save();
             $this->dispatchBrowserEvent('alert', ['type' => 'success', 'message' => 'Master gudang berhasil di update!']);
         } else {
-            Country::create($this->gudang);
+            GudangHub::create($this->gudang);
             $this->dispatchBrowserEvent('alert', ['type' => 'success', 'message' => 'Master gudang berhasil di tambah!']);
         }
         $this->confirmationAdd = false;
 
     }
 
-    public function deleteGudang(gudangPaket $gudang)
+    public function deleteGudangHub(GudangHub $gudang)
     {
         // if ($gudang->tarif()->count() != 0) {
         //     $this->dispatchBrowserEvent('alert', ['type' => 'info', 'message' => 'Master gudang tidak bisa di hapus!']);
