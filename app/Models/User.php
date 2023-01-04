@@ -76,6 +76,11 @@ class User extends Authenticatable
         return $this->hasOne(Saldo::class);
     }
 
+    public function tarifLokal()
+    {
+        return $this->hasMany(TarifLokal::class, 'user_id');
+    }
+
     public function pasiens()
     {
         return $this->hasMany(Pasien::class);
