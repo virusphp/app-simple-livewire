@@ -17,6 +17,13 @@ class TarifLokal extends Model
        'user_id'
     ];
 
+    public function scopePencarian($query, $search)
+    {
+        return $query->when($search, function($q, $search) {
+            $q->where('nama_gudang', 'like', "%{$search}%");
+        });
+    }
+
     public function scopeLatest($query) 
     {
         return $query->orderBy('created_at', 'DESC');

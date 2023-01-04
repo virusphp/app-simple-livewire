@@ -2,11 +2,13 @@
 
 namespace App\Http\Livewire\Master\Tarif;
 
+use App\Models\District;
+use App\Models\Regency;
 use App\Models\TarifLokal;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class TarifHub extends Component
+class TarifHubIndex extends Component
 {
     use WithPagination;
 
@@ -69,6 +71,9 @@ class TarifHub extends Component
 
     public function render()
     {
-        return view('livewire.master.tarif.tarif-hub');
+        $regencies = Regency::select('id','name')->get();
+        $districts = District::select('id','name')->get();
+        $dataTarifHub = TarifLokal::pencarian($this->search)->latest()->paginate($this->limit);
+        return view('livewire.master.tarif.tarif-hub-index', compact('dataTarifHub','regencies','districts'));
     }
 }

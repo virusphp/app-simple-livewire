@@ -3,6 +3,7 @@
 use App\Http\Livewire\Master\Country\CountriesIndex;
 use App\Http\Livewire\Master\Gudang\GudangIndex;
 use App\Http\Livewire\Master\Jenis\JenisIndex;
+use App\Http\Livewire\Master\Tarif\TarifHubIndex;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,6 +40,7 @@ Route::middleware([
         Route::get('countries', CountriesIndex::class)->name('countries');
         Route::get('jenispaket', JenisIndex::class)->name('jenispaket');
         Route::get('gudang', GudangIndex::class)->name('gudang');
+        Route::get('tarifhub', TarifHubIndex::class)->name('tarifhub');
     });
 
 });
