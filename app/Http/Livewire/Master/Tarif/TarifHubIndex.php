@@ -42,7 +42,6 @@ class TarifHubIndex extends Component
     public function updatedSelectedRegency($regency)
     {
         if (!is_null($regency)) {
-            $this->tarif['regency_id'] = $regency;
             $this->districts = District::select('id','name')->where('regency_id', $regency)->get();
         }
     }
@@ -56,6 +55,10 @@ class TarifHubIndex extends Component
     public function confirmEdit(TarifLokal $tarif)
     {
         $this->tarif = $tarif;
+        $this->selectedRegency = $this->tarif['regency_id'];
+         if (!is_null($this->selectedRegency)) {
+            $this->districts = District::select('id','name')->where('regency_id', $this->selectedRegency)->get();
+        }
         $this->confirmationAdd = true;
     }
 
