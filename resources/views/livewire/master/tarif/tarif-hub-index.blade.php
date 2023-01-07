@@ -37,10 +37,10 @@
                                         NO
                                     </th>
                                     <th scope="col" class="py-3 px-6">
-                                        KOTA
+                                        KECAMATAN
                                     </th>
                                     <th scope="col" class="py-3 px-6">
-                                        KECAMATAN
+                                        KOTA
                                     </th>
                                     <th scope="col" class="py-3 px-6">
                                         NAMA GUDANG HUB
@@ -63,10 +63,10 @@
                                         {{ $loop->iteration }}
                                     </th>
                                     <td class="py-3 px-6">
-                                        {{ $val->kota->name }}
+                                        {{ $val->kecamatan->name }}
                                     </td>
                                     <td class="py-3 px-6">
-                                        {{ $val->kecamatan->name }}
+                                        {{ $val->kota->name }}
                                     </td>
                                     <td class="py-3 px-6">
                                         {{ $val->nama_gudang }}

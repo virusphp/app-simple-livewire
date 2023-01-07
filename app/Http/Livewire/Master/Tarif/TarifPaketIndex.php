@@ -2,13 +2,12 @@
 
 namespace App\Http\Livewire\Master\Tarif;
 
-use App\Models\District;
-use App\Models\Regency;
-use App\Models\TarifLokal;
+use App\Http\Resources\TarifPaketCollection;
+use App\Models\Tarif;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class TarifHubIndex extends Component
+class TarifPaketIndex extends Component
 {
     use WithPagination;
 
@@ -34,8 +33,8 @@ class TarifHubIndex extends Component
 
     public function mount()
     {
-        $this->regencies = Regency::select('id','name')->get();
-        $this->districts = collect();
+        // $this->regencies = Regency::select('id','name')->get();
+        // $this->districts = collect();
     }
 
     public function updatedSelectedRegency($regency)
@@ -90,7 +89,16 @@ class TarifHubIndex extends Component
 
     public function render()
     {
-        $dataTarifHub = TarifLokal::pencarian($this->search)->latest()->paginate($this->limit);
-        return view('livewire.master.tarif.tarif-hub-index', compact('dataTarifHub'));
+        $dataTarif = Tarif::select('kode_negara','nama_negara','kode_jenis','berat','tarif')
+            ->pencarian($this->search)->get();
+        // $dataTarifs = $this->handleMap($dataTarif);
+        $transform = new TarifPaketCollection($dataTarif);
+        dd($transform);
+        return view('livewire.master.tarif.tarif-paket-index');
+    }
+
+    protected function handleMap($data)
+    {
+        return $data;
     }
 }

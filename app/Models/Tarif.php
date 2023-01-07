@@ -19,6 +19,13 @@ class Tarif extends Model
         'user_id'
     ];
 
+    public function scopePencarian($query, $search)
+    {
+        return $query->when($search, function($q, $search) {
+            $q->where('nama_negara', 'like', "%{$search}%");
+        });
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -30,6 +30,9 @@
                     <x-jet-nav-link href="{{ route('tarifhub') }}" :active="request()->routeIs('tarifhub')">
                         {{ __('Tarif Hub') }}
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('tarifpaket') }}" :active="request()->routeIs('tarifpaket')">
+                        {{ __('Tarif Paket') }}
+                    </x-jet-nav-link>
        
                 </div>
             </div>
