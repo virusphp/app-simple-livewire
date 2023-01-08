@@ -3,8 +3,10 @@
 namespace App\Http\Livewire\Master\Tarif;
 
 use App\Models\District;
+use App\Models\GudangHub;
 use App\Models\Regency;
 use App\Models\TarifLokal;
+use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -17,47 +19,52 @@ class TarifHubIndex extends Component
     public $search;
     public $limit = 10; 
 
-    public $regencies;
-    public $districts;
+    // public $district_id, $regency_id, $nama_gudang, $tarif_lokal;
 
-    public $selectedRegency = NULL;
+    public $selectedGudang = NULL;
 
     public $confirmationDelete;
     public $confirmationAdd = false;
 
     protected $rules = [
-        'selectedRegency' => 'required',
-        'tarif.district_id' => 'nullable|string',
+        'tarif.district_id' => 'required',
+        'tarif.regency_id' => 'required',
         'tarif.nama_gudang' => 'required',
         'tarif.tarif_lokal' => 'required',
     ];
 
-    public function mount()
+    public function getKecamatanAgenProperty()
     {
-        $this->regencies = Regency::select('id','name')->get();
-        $this->districts = collect();
+        return User::agen()
+            ->join('profiles', 'profiles.kode_agen','=','users.kode_agen')
+            ->select('profiles.district_id as kode', 'profiles.nama_agen as nama')
+            ->get();
     }
 
-    public function updatedSelectedRegency($regency)
+    public function getGudangHubProperty()
     {
-        if (!is_null($regency)) {
-            $this->districts = District::select('id','name')->where('regency_id', $regency)->get();
-        }
+        return GudangHub::select('regency_id as kode', 'nama_gudang as nama')->get();
     }
 
     public function confirmAdd()
     {
-        $this->reset(['tarif']);
+        $this->reset(['tarif', 'selectedGudang']);
         $this->confirmationAdd = true;
+    }
+
+    public function updatedSelectedGudang($gudang)
+    {
+        if (isset($gudang)) {
+            $this->tarif['regency_id'] = $gudang;
+            $namaGudang = GudangHub::select('nama_gudang')->where('regency_id', $gudang)->first()->nama_gudang;
+            $this->tarif['nama_gudang'] = $namaGudang;
+        }
     }
 
     public function confirmEdit(TarifLokal $tarif)
     {
         $this->tarif = $tarif;
-        $this->selectedRegency = $this->tarif['regency_id'];
-         if (!is_null($this->selectedRegency)) {
-            $this->districts = District::select('id','name')->where('regency_id', $this->selectedRegency)->get();
-        }
+        $this->selectedGudang = $tarif->regency_id;
         $this->confirmationAdd = true;
     }
 
@@ -68,7 +75,6 @@ class TarifHubIndex extends Component
 
     public function saveTarifHub()
     {
-        // dd($this->tarif);
         $this->validate();
         if(isset($this->tarif->id)) {
             $this->tarif->save();

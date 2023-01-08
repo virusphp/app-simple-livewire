@@ -20,7 +20,10 @@ class TarifLokal extends Model
     public function scopePencarian($query, $search)
     {
         return $query->when($search, function($q, $search) {
-            $q->where('nama_gudang', 'like', "%{$search}%");
+            $q->where('nama_gudang', 'like', "%{$search}%")
+            ->orWhereHas('kecamatan', function($query) use($search) {
+                $query->where('name', 'like', "%{$search}%");
+            });
         });
     }
 

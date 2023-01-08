@@ -131,39 +131,32 @@
                                 <x-jet-input-error for="tarif.kode_tarif" class="mt-2" />
                             </div>
                             <div class="col-span-6 sm:col-span-4 mt-2">
-                                <x-jet-label for="selectedRegency" value="{{ __('Kota / Kabupaten') }}" />
-                                <select wire:model="selectedRegency" id="selectedRegency"
+                                <x-jet-label for="district-id" value="{{ __('Kecamatan Agen') }}" />
+                                <select wire:model="tarif.district_id" id="district-id"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option value="" selected>Select Kota / Kab</option>
-                                    @foreach($regencies as $val)
-                                    <option value="{{ $val->id }}" wire:key="{{ $val->name }}">{{
-                                        $val->name }}
-                                    </option>
+                                    <option value="" selected>Kecamatan Agen</option>
+                                    @if(isset($this->kecamatanAgen))
+                                    @foreach($this->kecamatanAgen as $val)
+                                    <option value="{{ $val->kode }}">{{ $val->nama }}</option>
                                     @endforeach
-                                </select>
-                                <x-jet-input-error for="tarif.regency_id" class="mt-2" />
-                            </div>
-                            <div class="col-span-6 sm:col-span-4 mt-2">
-                                <x-jet-label for="district_id" value="{{ __('Kecamatan') }}" />
-                                <select wire:model.defer="tarif.district_id" id="district-id"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option value="" selected>Select Kecamatan</option>
-                                    {{-- {{ dd(isset($this->tarif->nama_gudang)) }} --}}
-                                    @if(isset($selectedRegency))
-                                        @foreach($districts as $val)
-                                        <option value="{{ $val->id }}" wire:key="{{ $val->name }}">{{
-                                            $val->name }}
-                                        </option>
-                                        @endforeach
                                     @endif
                                 </select>
-                                <x-jet-input-error for="tarif.regency_id" class="mt-2" />
+                                <x-jet-input-error for="tarif.district_id" class="mt-2" />
                             </div>
                             <div class="col-span-6 sm:col-span-4 mt-2">
-                                <x-jet-label for="nama_gudan" value="{{ __('Nama Gudang Hub') }}" />
-                                <x-jet-input id="nama-gudang" type="text" class="mt-1 block w-full"
-                                    wire:model.defer="tarif.nama_gudang" />
-                                <x-jet-input-error for="tarif.nama_gudang" class="mt-2" />
+                                <x-jet-label for="selectedGudang" value="{{ __('Gudang Hub') }}" />
+                                <select wire:model="selectedGudang" id="selectedGudang"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option value="" selected>Gudang Hub</option>
+                                    @if(isset($this->gudangHub))
+                                    @foreach($this->gudangHub as $val)
+                                    <option value="{{ $val->kode }}" wire:key="{{ $val->nama }}">{{ $val->nama }}</option>
+                                    @endforeach
+                                    @endif
+                                </select>
+                                <input type="hidden" name="regency_id" wire:model.defer="tarif.regency_id" >
+                                <input type="hidden" name="nama_gudang" wire:model.defer="tarif.nama_gudang" >
+                                <x-jet-input-error for="tarif.regency_id" class="mt-2" />
                             </div>
                             <div class="col-span-6 sm:col-span-4 mt-2">
                                 <x-jet-label for="tarif_lokasl" value="{{ __('Nominal Tarif') }}" />
