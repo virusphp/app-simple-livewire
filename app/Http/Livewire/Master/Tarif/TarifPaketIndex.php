@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\Master\Tarif;
 
-use App\Http\Resources\TarifPaketCollection;
 use App\Models\Tarif;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -89,16 +89,56 @@ class TarifPaketIndex extends Component
 
     public function render()
     {
-        $dataTarif = Tarif::select('kode_negara','nama_negara','kode_jenis','berat','tarif')
+        $dataTarif = Tarif::select('tarifs.kode_negara','tarifs.nama_negara','jp.kode_jenis','jp.nama_jenis_paket','tarifs.berat','tarifs.tarif')
+            ->join('jenis_pakets as jp', 'tarifs.kode_jenis','jp.kode_jenis')
             ->pencarian($this->search)->get();
-        // $dataTarifs = $this->handleMap($dataTarif);
-        $transform = new TarifPaketCollection($dataTarif);
-        dd($transform);
-        return view('livewire.master.tarif.tarif-paket-index');
+        $dataTarifs = $this->handleMap($dataTarif);
+        // dd($dataTarifs);
+        return view('livewire.master.tarif.tarif-paket-index', compact('dataTarifs'));
     }
 
-    protected function handleMap($data)
+    protected function handleMap($params)
     {
-        return $data;
+        $data = [];
+        foreach ($params as $value) {
+            $data[$value->kode_negara]['kode_negara'] = $value->kode_negara;
+            $data[$value->kode_negara]['nama_negara'] = $value->nama_negara;
+            $data[$value->kode_negara]['kode_jenis'] = $value->kode_jenis;
+            $data[$value->kode_negara]['jenis_paket'] = $value->nama_jenis_paket;
+            $data[$value->kode_negara]['berat'][] = $value->berat;
+            $data[$value->kode_negara]['tarif'][] = $value->tarif;
+        }
+
+        // $tarifs = [];
+        foreach ($data as $key => $q) {
+            $tarifs[$key] = [
+            'kode_negara' => $q['kode_negara'],
+            'nama_negara' => $q['nama_negara'],
+            'kode_jenis' => $q['kode_jenis'],
+            'jenis_paket' => $q['jenis_paket'],
+            'berat1' => $q['berat'][0],
+            'tarif1' => $q['tarif'][0],
+            'berat2' => $q['berat'][1],
+            'tarif2' => $q['tarif'][1],
+            'berat3' => $q['berat'][2],
+            'tarif3' => $q['tarif'][2],
+            ];
+        }
+
+        $total = count($tarifs);
+        $per_page = $this->limit;
+        $current = Request()->input("page") ?? 1;
+        $current_page = LengthAwarePaginator::resolveCurrentPage();
+        $starting_point = ($current_page * $per_page) - $per_page;
+
+        $array = array_slice($tarifs, $starting_point, $per_page, false);
+        // dd(request()->query(), $array, $total, $per_page, $current_page);
+        $array = new LengthAwarePaginator($array, $total, $per_page, $current, [
+            'path' => Request()->url(),
+            'pageName' => 'page'
+        ]);
+
+        return $array;
+    
     }
 }

@@ -14,10 +14,11 @@ class TarifPaketCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        // return parent::toArray($request);
+        // retur n parent::toArray($request);
         return [
-            'negara' => $this->nama_negara,
-            'kode' => $this->kode_negara,
+            "tarif" => $this->collection->map(function($paket) use ($request) {
+                return (new TarifPaketResource($paket))->toArray($request);
+            })
         ];
     }
 }

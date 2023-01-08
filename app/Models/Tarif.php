@@ -26,6 +26,11 @@ class Tarif extends Model
         });
     }
 
+    public function jenis()
+    {
+        return $this->hasMany(JenisPaket::class, 'kode_jenis','kode_jenis');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
