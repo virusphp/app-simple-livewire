@@ -66,9 +66,29 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    public function transaksi()
+    {
+        return $this->hasMany(PacketTransaction::class, 'user_id');
+    }
+
     public function profile()
     {
         return $this->belongsTo(Profile::class, 'kode_agen');
+    }
+
+    public function tarif()
+    {
+        return $this->hasMany(Tarif::class, 'user_id');
+    }
+
+    public function tariflokal()
+    {
+        return $this->hasMany(TarifLokal::class, 'user_id');
+    }
+
+    public function topup()
+    {
+        return $this->hasMany(TopupSaldo::class, 'user_id');
     }
 
     public function saldo()
@@ -76,14 +96,23 @@ class User extends Authenticatable
         return $this->hasOne(Saldo::class);
     }
 
-    public function tarifLokal()
+    public function packets()
     {
-        return $this->hasMany(TarifLokal::class, 'user_id');
+        return $this->hasMany(PacketTransaction::class);
     }
 
-    public function pasiens()
+    public function fees()
     {
-        return $this->hasMany(Pasien::class);
+        return $this->hasMany(FeeAgen::class);
+    }
+
+    public function deleteRole($params)
+    {
+        return DB::table('model_has_roles')->where('model_id', $params->id)->delete();
+    }
+
+    public function role() {
+        return $this->belongsTo('App\Role', 'role');
     }
 
     public function scopeAgen($query)

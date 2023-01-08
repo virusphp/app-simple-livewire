@@ -54,16 +54,16 @@ class AgenIndex extends Component
 
     public function deleteAgen(User $user)
     {
-        // dd($user->transaksi, $user->topup, $user->saldo, $user->profile);
         if (!$user->transaksi && !$user->topup) {
             if ($user->saldo) {
                 $user->saldo->delete();
             }
             $user->delete();
             $this->confirmationDelete = false;
-            session()->flash('message','Agen berhasil di hapus!');
+            $this->dispatchBrowserEvent('alert', ['type' => 'success', 'message' => 'Agen berhasil di hapus!']);
         }
-        session()->flash('message','Agen gagal di hapus!');
+        $this->confirmationDelete = false;
+        $this->dispatchBrowserEvent('alert', ['type' => 'info', 'message' => 'Agen tidak bisa di hapus karena ada transaksi!']);
     }
 
     public function render()

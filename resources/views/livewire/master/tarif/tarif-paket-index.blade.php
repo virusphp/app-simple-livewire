@@ -94,19 +94,19 @@
                                         {{ $val['berat1'] }}
                                     </td>
                                     <td class="py-3 px-3">
-                                        {{ $val['tarif1'] }}
+                                        {{ rupiah($val['tarif1']) }}
                                     </td>
                                     <td class="py-3 px-3">
                                         {{ $val['berat2'] }}
                                     </td>
                                     <td class="py-3 px-3">
-                                        {{ $val['tarif2'] }}
+                                        {{ rupiah($val['tarif2']) }}
                                     </td>
                                     <td class="py-3 px-3">
                                         {{ $val['berat3'] }}
                                     </td>
                                     <td class="py-3 px-3">
-                                        {{ $val['tarif3'] }}
+                                        {{ rupiah($val['tarif3']) }}
                                     </td>
                                     <td class="text-right flex items-end">
                                         <x-jet-button wire:click="confirmEdit('{{ $val['kode_negara'] }}')"
