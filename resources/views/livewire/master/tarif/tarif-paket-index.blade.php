@@ -165,33 +165,29 @@
                                 <x-jet-input-error for="tarif.kode_tarif" class="mt-2" />
                             </div>
                             <div class="col-span-6 sm:col-span-4 mt-2">
-                                <x-jet-label for="selectedRegency" value="{{ __('Kota / Kabupaten') }}" />
-                                <select wire:model="selectedRegency" id="selectedRegency"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option value="" selected>Select Kota / Kab</option>
-                                </select>
-                                <x-jet-input-error for="tarif.regency_id" class="mt-2" />
+                                <x-jet-label for="selectedCountry" value="{{ __('Negara tujuan') }}" />
+                                <x-select-search :data="$this->countries" wire:model="selectedCountry" placeholder="Select negara!"/>
+                                <x-jet-input-error for="selectedJenisPaket" class="mt-2" />
                             </div>
                             <div class="col-span-6 sm:col-span-4 mt-2">
-                                <x-jet-label for="district_id" value="{{ __('Kecamatan') }}" />
-                                <select wire:model.defer="tarif.district_id" id="district-id"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option value="" selected>Select Kecamatan</option>
-                                    
-                                </select>
-                                <x-jet-input-error for="tarif.regency_id" class="mt-2" />
+                                <x-jet-label for="selectedJenisPaket" value="{{ __('Jenis Paket') }}" />
+                                <x-select-search :data="$this->jenisPaket" wire:model="selectedJenisPaket" placeholder="Select jenis paket!"/>
+                                <x-jet-input-error for="selectedJenisPaket" class="mt-2" />
                             </div>
-                            <div class="col-span-6 sm:col-span-4 mt-2">
-                                <x-jet-label for="nama_gudan" value="{{ __('Nama Gudang Hub') }}" />
-                                <x-jet-input id="nama-gudang" type="text" class="mt-1 block w-full"
-                                    wire:model.defer="tarif.nama_gudang" />
-                                <x-jet-input-error for="tarif.nama_gudang" class="mt-2" />
-                            </div>
-                            <div class="col-span-6 sm:col-span-4 mt-2">
-                                <x-jet-label for="tarif_lokasl" value="{{ __('Nominal Tarif') }}" />
-                                <x-jet-input id="tarif-lokal" type="text" class="mt-1 block w-full"
-                                    wire:model.defer="tarif.tarif_lokal" />
-                                <x-jet-input-error for="tarif.tarif_lokal" class="mt-2" />
+                            <div class="grid md:grid-cols-2 md:gap-8 mt-2">
+                                <div class="relative z-0 mb-1 w-48 group">
+                                    <x-jet-label for="kg_pertama" value="{{ __('Kg Pertama') }}" />
+                                    <x-jet-input id="kd-pertama" type="text" class="mt-0 text-xs block w-full"
+                                        wire:model.defer="tarif.berat" />
+                                    <x-jet-input-error for="tarif.berat" class="mt-0" />
+                                </div>
+            
+                                <div class="relative z-0 mb-1 w-full group">
+                                    <x-jet-label for="tarif" value="{{ __('Tarif Umum') }}" />
+                                    <x-jet-input id="tarif-tarif" type="text" class="mt-0 text-xs block w-full"
+                                        wire:model.defer="tarif.tarif" />
+                                    <x-jet-input-error for="tarif.tarif" class="mt-0" />
+                                </div>
                             </div>
 
                         </x-slot>

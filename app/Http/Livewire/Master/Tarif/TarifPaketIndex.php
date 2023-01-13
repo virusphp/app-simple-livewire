@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Master\Tarif;
 
+use App\Models\Country;
+use App\Models\JenisPaket;
 use App\Models\Tarif;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Component;
@@ -16,25 +18,31 @@ class TarifPaketIndex extends Component
     public $search;
     public $limit = 10; 
 
-    public $regencies;
-    public $districts;
-
-    public $selectedRegency = NULL;
+    public $selectedCountry = NULL;
+    public $selectedJenisPaket = NULL;
 
     public $confirmationDelete;
     public $confirmationAdd = false;
 
     protected $rules = [
-        'selectedRegency' => 'required',
-        'tarif.district_id' => 'nullable|string',
-        'tarif.nama_gudang' => 'required',
-        'tarif.tarif_lokal' => 'required',
+        'selectedCountry' => 'required',
+        'tarif.nama_negara' => 'required',
+        'tarif.kode_jenis' => 'nullable|string',
+        'tarif.berat_pertama' => 'string',
+        'tarif.berat_kedua' => 'required',
+        'tarif.berat_ketiga' => 'required',
+        'tarif.tarif_pertama' => 'required',
+        'tarif.tarif_' => 'required',
     ];
 
-    public function mount()
+    public function getCountriesProperty()
     {
-        // $this->regencies = Regency::select('id','name')->get();
-        // $this->districts = collect();
+        return Country::pluck('nama_negara as nama','kode_negara as id');
+    }
+
+    public function getJenisPaketProperty()
+    {
+        return JenisPaket::pluck('nama_jenis_paket as nama', 'kode_jenis as id');
     }
 
     public function updatedSelectedRegency($regency)
