@@ -178,15 +178,54 @@
                                 <div class="relative z-0 mb-1 w-48 group">
                                     <x-jet-label for="kg_pertama" value="{{ __('Kg Pertama') }}" />
                                     <x-jet-input id="kd-pertama" type="text" class="mt-0 text-xs block w-full"
-                                        wire:model.defer="tarif.berat" />
-                                    <x-jet-input-error for="tarif.berat" class="mt-0" />
+                                        wire:model.defer="tarif.0.berat" value="1" readonly/>
+                                    <input type="hidden" wire:model="tarif.0.nama_negara">
+                                    <input type="hidden" wire:model="tarif.0.kode_negara">
+                                    <input type="hidden" wire:model="tarif.0.kode_jenis">
+                                    <x-jet-input-error for="tarif.0.berat" class="mt-0" />
                                 </div>
             
                                 <div class="relative z-0 mb-1 w-full group">
                                     <x-jet-label for="tarif" value="{{ __('Tarif Umum') }}" />
                                     <x-jet-input id="tarif-tarif" type="text" class="mt-0 text-xs block w-full"
-                                        wire:model.defer="tarif.tarif" />
-                                    <x-jet-input-error for="tarif.tarif" class="mt-0" />
+                                        wire:model.defer="tarif.0.tarif" />
+                                    <x-jet-input-error for="tarif.0.tarif" class="mt-0" />
+                                </div>
+                            </div>
+                            <div class="grid md:grid-cols-2 md:gap-8 mt-2">
+                                <div class="relative z-0 mb-1 w-48 group">
+                                    <x-jet-label for="kg_pertama" value="{{ __('Kg Selanjutnya') }}" />
+                                    <x-jet-input id="kd-pertama" type="text" class="mt-0 text-xs block w-full"
+                                        wire:model.defer="tarif.1.berat" value="2" readonly/>
+                                    <input type="hidden" wire:model="tarif.1.nama_negara">
+                                    <input type="hidden" wire:model="tarif.1.kode_negara">
+                                    <input type="hidden" wire:model="tarif.1.kode_jenis">
+                                    <x-jet-input-error for="tarif.1.berat" class="mt-0" />
+                                </div>
+            
+                                <div class="relative z-0 mb-1 w-full group">
+                                    <x-jet-label for="tarif" value="{{ __('Tarif Umum') }}" />
+                                    <x-jet-input id="tarif-tarif" type="text" class="mt-0 text-xs block w-full"
+                                        wire:model.defer="tarif.1.tarif" />
+                                    <x-jet-input-error for="tarif.1.tarif" class="mt-0" />
+                                </div>
+                            </div>
+                            <div class="grid md:grid-cols-2 md:gap-8 mt-2">
+                                <div class="relative z-0 mb-1 w-48 group">
+                                    <x-jet-label for="kg_pertama" value="{{ __('Kg Lebih dari') }}" />
+                                    <x-jet-input id="kd-pertama" type="text" class="mt-0 text-xs block w-full"
+                                        wire:model.defer="tarif.2.berat" value="31" readonly/>
+                                    <input type="hidden" wire:model="tarif.2.nama_negara">
+                                    <input type="hidden" wire:model="tarif.2.kode_negara">
+                                    <input type="hidden" wire:model="tarif.2.kode_jenis">
+                                    <x-jet-input-error for="tarif.2.berat" class="mt-0" />
+                                </div>
+            
+                                <div class="relative z-0 mb-1 w-full group">
+                                    <x-jet-label for="tarif" value="{{ __('Tarif Umum') }}" />
+                                    <x-jet-input id="tarif-tarif" type="text" class="mt-0 text-xs block w-full"
+                                        wire:model.defer="tarif.2.tarif" />
+                                    <x-jet-input-error for="tarif.2.tarif" class="mt-0" />
                                 </div>
                             </div>
 
@@ -198,7 +237,7 @@
                                 {{ __('Cancel') }}
                             </x-jet-secondary-button>
 
-                            <x-jet-danger-button class="ml-3" wire:click="saveTarifHub()" wire:loading.attr="disabled">
+                            <x-jet-danger-button class="ml-3" wire:click="saveTarifPaket()" wire:loading.attr="disabled">
                                 {{ __('Save') }}
                             </x-jet-danger-button>
                         </x-slot>

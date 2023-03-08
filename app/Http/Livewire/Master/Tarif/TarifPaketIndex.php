@@ -6,6 +6,7 @@ use App\Models\Country;
 use App\Models\JenisPaket;
 use App\Models\Tarif;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -26,13 +27,21 @@ class TarifPaketIndex extends Component
 
     protected $rules = [
         'selectedCountry' => 'required',
-        'tarif.nama_negara' => 'required',
-        'tarif.kode_jenis' => 'nullable|string',
-        'tarif.berat_pertama' => 'string',
-        'tarif.berat_kedua' => 'required',
-        'tarif.berat_ketiga' => 'required',
-        'tarif.tarif_pertama' => 'required',
-        'tarif.tarif_' => 'required',
+
+        'tarif.0.kode_jenis' => 'required',
+        'tarif.0.kode_negara' => 'required',
+        'tarif.0.berat' => 'required',
+        'tarif.0.tarif' => 'required',
+
+        'tarif.1.kode_jenis' => 'required',
+        'tarif.1.kode_negara' => 'required',
+        'tarif.1.berat' => 'required',
+        'tarif.1.tarif' => 'required',
+
+        'tarif.2.kode_jenis' => 'required',
+        'tarif.2.kode_negara' => 'required',
+        'tarif.2.berat' => 'required',
+        'tarif.2.tarif' => 'required',
     ];
 
     public function getCountriesProperty()
@@ -45,20 +54,41 @@ class TarifPaketIndex extends Component
         return JenisPaket::pluck('nama_jenis_paket as nama', 'kode_jenis as id');
     }
 
-    public function updatedSelectedRegency($regency)
+    public function updatedSelectedCountry($country)
     {
-        if (!is_null($regency)) {
-            $this->districts = District::select('id','name')->where('regency_id', $regency)->get();
-        }
+       if (!empty($country)) {
+            $dataCountry = Country::select('nama_negara')->where('kode_negara', $country)->first();
+            $this->tarif[0]['kode_negara'] = $country;
+            $this->tarif[0]['nama_negara'] = $dataCountry->nama_negara;
+            $this->tarif[1]['kode_negara'] = $country;
+            $this->tarif[1]['nama_negara'] = $dataCountry->nama_negara;
+            $this->tarif[2]['kode_negara'] = $country;
+            $this->tarif[2]['nama_negara'] = $dataCountry->nama_negara;
+       }
+    }
+
+    public function updatedSelectedJenisPaket($paket)
+    {
+        $this->tarif[0]['kode_jenis'] = $paket;
+        $this->tarif[1]['kode_jenis'] = $paket;
+        $this->tarif[2]['kode_jenis'] = $paket;
+        
+        $this->tarif[0]['user_id'] = Auth::user()->id;
+        $this->tarif[1]['user_id'] = Auth::user()->id;
+        $this->tarif[2]['user_id'] = Auth::user()->id;
+
     }
 
     public function confirmAdd()
     {
         $this->reset(['tarif']);
+        $this->tarif[0]['berat'] = 1;
+        $this->tarif[1]['berat'] = 2;
+        $this->tarif[2]['berat'] = 31;
         $this->confirmationAdd = true;
     }
 
-    public function confirmEdit(TarifLokal $tarif)
+    public function confirmEdit(Tarif $tarif)
     {
         $this->tarif = $tarif;
         $this->selectedRegency = $this->tarif['regency_id'];
@@ -73,19 +103,35 @@ class TarifPaketIndex extends Component
         $this->confirmationDelete = $id;
     }
 
-    public function saveTarifHub()
+    public function saveTarifPaket()
     {
-        // dd($this->tarif);
         $this->validate();
+        // dd($this->tarif[0]['kode_negara']);
         if(isset($this->tarif->id)) {
             $this->tarif->save();
             $this->dispatchBrowserEvent('alert', ['type' => 'success', 'message' => 'Master tarif berhasil di update!']);
         } else {
-            Auth()->user()->tarifLokal()->create($this->tarif);
+            Auth()->user()->tarif()->createMany($this->tarif);
             $this->dispatchBrowserEvent('alert', ['type' => 'success', 'message' => 'Master tarif berhasil di tambah!']);
         }
         $this->confirmationAdd = false;
+    }
 
+    protected function handleRequest($params)
+    {
+        $data = [];
+        foreach ($params as $val) {
+            // dd($val['berat'], $val['tarif'], $params['kode_jenis']);
+            $data[] = [
+                'kode_negara' => $params['kode_negara'],
+                'nama_negara' => strtoupper($params['nama_negara']),
+                'kode_jenis' => $params['kode_jenis'],
+                'berat' => $val['berat'],
+                'tarifs' => $val['tarif'],
+                'user_id' => Auth::user()->id,
+            ];
+        }
+        return $data;
     }
 
     public function deleteTarifHub(TarifLokal $tarif)
