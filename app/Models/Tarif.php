@@ -26,6 +26,14 @@ class Tarif extends Model
         });
     }
 
+    // public function scopeFilter($query, $jenis)
+    // {
+    //     return $query->when($jenis, function($q, $jenis) {
+    //         $q->where('nama_negara', 'like', "%{$jenis}%");
+    //     });
+    // }
+
+
     public function jenis()
     {
         return $this->hasMany(JenisPaket::class, 'kode_jenis','kode_jenis');

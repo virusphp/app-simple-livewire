@@ -24,6 +24,15 @@
                 <div class="mt-2 text-gray-500">
                     <div class="flex justify-end py-2">
                         <div class="mr-2">
+                            <label for="jenis">Jenis Paket</label>
+                            <select wire:model="selectedJenis" id="jenis" class="text-sm">
+                                    <option value="">Pilih Jenis Paket</option>
+                                @foreach($this->jenis as $key => $val)
+                                    <option value="{{ $key }}">{{ $val }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mr-2">
                             <input type="search" wire:model="search" placeholder="Search..."
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-600 leading-tight focus:outline-none focus:shadow-outline">
                         </div>

@@ -17,7 +17,9 @@ class TarifPaketIndex extends Component
     public $tarif;
 
     public $search;
-    public $limit = 10; 
+    public $limit = 10;
+
+    public $selectedJenis;
 
     public $selectedCountry = NULL;
     public $selectedJenisPaket = NULL;
@@ -52,6 +54,16 @@ class TarifPaketIndex extends Component
     public function getJenisPaketProperty()
     {
         return JenisPaket::pluck('nama_jenis_paket as nama', 'kode_jenis as id');
+    }
+
+    public function mount()
+    {
+        $this->jenis = JenisPaket::pluck('nama_jenis_paket as nama', 'kode_jenis as id');
+    }
+
+    public function updatedSelectdJenis()
+    {
+        $this->resetPage();
     }
 
     public function updatedSelectedCountry($country)
@@ -143,12 +155,27 @@ class TarifPaketIndex extends Component
 
     public function render()
     {
-        $dataTarif = Tarif::select('tarifs.kode_negara','tarifs.nama_negara','jp.kode_jenis','jp.nama_jenis_paket','tarifs.berat','tarifs.tarif')
+        $dataTarif = Tarif::select(
+            'tarifs.id', 
+            'tarifs.kode_negara', 
+            'tarifs.nama_negara', 
+            'tarifs.kode_jenis', 
+            'tarifs.berat',  
+            'tarifs.tarif', 
+            'tarifs.user_id', 
+            'jp.nama_jenis_paket')
             ->join('jenis_pakets as jp', 'tarifs.kode_jenis','jp.kode_jenis')
-            ->pencarian($this->search)->get();
-        $dataTarifs = $this->handleMap($dataTarif);
-        // dd($dataTarifs);
-        return view('livewire.master.tarif.tarif-paket-index', compact('dataTarifs'));
+            ->orderBy('tarifs.nama_negara', 'ASC')
+            ->orderBy('tarifs.berat', 'ASC')
+            ->where('tarifs.kode_jenis', '=',  $this->selectedJenis)
+            ->pencarian($this->search)
+            ->get();
+
+            // dd($dataTarif, $this->jenis);
+            $dataTarifs = $this->handleMap($dataTarif);
+            // dd($dataTarifs);
+
+            return view('livewire.master.tarif.tarif-paket-index', compact('dataTarifs'));
     }
 
     protected function handleMap($params)
@@ -163,7 +190,7 @@ class TarifPaketIndex extends Component
             $data[$value->kode_negara]['tarif'][] = $value->tarif;
         }
 
-        // $tarifs = [];
+        $tarifs = [];
         foreach ($data as $key => $q) {
             $tarifs[$key] = [
             'kode_negara' => $q['kode_negara'],
